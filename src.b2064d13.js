@@ -63,6 +63,6 @@ module.exports=require("./lib/axios");
 },{"./lib/axios":"nUiQ"}],"clu1":[function(require,module,exports) {
 
 },{}],"Focm":[function(require,module,exports) {
-"use strict";var e=t(require("axios"));function t(e){return e&&e.__esModule?e:{default:e}}require("./sass/main.scss");const o={button:document.querySelector("button"),body:document.querySelector(".body-container")},a="https://pixabay.com/api/?key=14665608-5c267132ac5256a05f9292b82",c="14665608-5c267132ac5256a05f9292b82";function n(t){t.preventDefault(),e.default.get("https://pixabay.com/api/?key=14665608-5c267132ac5256a05f9292b82&q=yellow+flowers&image_type=photo").then(e=>{const t=e.data.hits.map(e=>e.webformatURL);console.log(t);t.map(e=>{o.body.insertAdjacentHTML("beforeend",`<img src="${e}" alt="картинка">`)})}).then(console.log)}o.button.addEventListener("click",n);
+"use strict";var e=t(require("axios"));function t(e){return e&&e.__esModule?e:{default:e}}require("./sass/main.scss");const a={button:document.querySelector("button"),gallery:document.querySelector(".image-gallery")},o="https://pixabay.com/api/?key=14665608-5c267132ac5256a05f9292b82",c="14665608-5c267132ac5256a05f9292b82";function n(t){t.preventDefault(),e.default.get("https://pixabay.com/api/?key=14665608-5c267132ac5256a05f9292b82&q=yellow+flowers&image_type=photo").then(e=>{const t=e.data.hits.map(e=>e.webformatURL);console.log(t);t.map(e=>{a.gallery.insertAdjacentHTML("beforeend",`<img src="${e}" alt="картинка">`)})}).then(console.log)}a.button.addEventListener("click",n);
 },{"axios":"dZBD","./sass/main.scss":"clu1"}]},{},["Focm"], null)
-//# sourceMappingURL=/goit-js-hw-11/src.4d784ee4.js.map
+//# sourceMappingURL=/goit-js-hw-11/src.b2064d13.js.map
