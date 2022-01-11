@@ -3,7 +3,7 @@ import './sass/main.scss';
 
 const refs = {
     button: document.querySelector('button'),
-    body: document.querySelector('.body-container'),
+    gallery: document.querySelector('.image-gallery'),
 }
 
 // console.log(refs.body);
@@ -26,7 +26,7 @@ function onClickEvent(event) {
             console.log(imageArray);
 
             const renderImage = imageArray.map(url => {
-                refs.body.insertAdjacentHTML('beforeend', `<img src="${url}" alt="картинка">`);
+                refs.gallery.insertAdjacentHTML('beforeend', `<img src="${url}" alt="картинка">`);
             })
 
 
