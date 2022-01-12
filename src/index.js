@@ -5,17 +5,25 @@ const refs = {
     button: document.querySelector('button'),
     gallery: document.querySelector('.image-gallery'),
     input: document.querySelector('input'),
+    loadMoreButton: document.querySelector('.load-more'),
 }
 
-// console.log(refs.body);
+// console.log(refs.loadMoreButton);
 // refs.body.insertAdjacentHTML('beforeend', '<h1>hello world</h1>');
 
 const BASE_URL = 'https://pixabay.com/api/?key=14665608-5c267132ac5256a05f9292b82';
 const KEY = '14665608-5c267132ac5256a05f9292b82';
 let searchQueryText = ''.trim();
 
+let options = {
+        imageType: "photo",
+        page: 1,
+        perPage: 10,
+    }
+
 refs.input.addEventListener('input', onInputEvent);
 refs.button.addEventListener('click', onClickEvent);
+refs.loadMoreButton.addEventListener('click', onLoadMoreEvent)
 
 function onInputEvent(event) {
     searchQueryText = event.currentTarget.value;
@@ -26,15 +34,11 @@ function onClickEvent(event) {
 
     clearGallery();
 
-    const options = {
-        imageType: "photo",
-        page: 1,
-        perPage: 10,
-    }
-
     if (!searchQueryText) {
         return;
     };
+
+    options.page = 1;
 
     fetchPicture(searchQueryText, options)
         .then(r => {
@@ -86,7 +90,21 @@ function renderImage(response) {
 
 function clearGallery() {
     refs.gallery.innerHTML = '';
-}
+};
+
+function onLoadMoreEvent(event) {
+    options.page += 1;
+
+    fetchPicture(searchQueryText, options)
+        .then(r => {
+
+            if (!r.data.totalHits) {
+                alert('no resutls');
+            }
+
+            renderImage(r)
+        });
+} 
 
 
   
