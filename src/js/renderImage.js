@@ -11,8 +11,8 @@ export default function renderImage(response, ref) {
                 const largeImageUrl = data.largeImageURL;
             
               ref.insertAdjacentHTML('beforeend',
-                    `<a href="https://pixabay.com/get/g78345ee89ef3501dd382025bae5e4488e3a78961b70e5d75e551c6427735aeb9e8fa0b907bc541db97ee46292c99d0246358eb5c2731105daede1cc58ff6091c_1280.jpg">
-                    <div class="photo-card">
+                  `<a href="${largeImageUrl}" class="photo-card">
+                    
                     <img src="${url}" />
                         <div class="info">
                             <p class="info-item">
@@ -28,8 +28,8 @@ export default function renderImage(response, ref) {
                             <b>Downloads</b>${downloads}
                             </p>
                         </div>
-                        </a>
-                    </div>`);
+                        
+                        </a>`);
             });
     
 };

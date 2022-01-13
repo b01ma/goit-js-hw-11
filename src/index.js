@@ -16,9 +16,7 @@ const refs = {
 // console.log(galleryA);
 
 let searchQueryText = ''.trim(); 
-let gallery = {};
-
-gallery = new SimpleLightbox('.image-gallery a');
+let gallery = new SimpleLightbox('.image-gallery .photo-card');
 
 
 refs.input.addEventListener('input', onInputEvent);
@@ -50,11 +48,10 @@ function onSearchEvent(event) {
 
             renderImage(r, refs.gallery);
             
-            createSimpleLightBox();
+            gallery.refresh();
         
-        }).then()
-        .catch(error => {
-            alert('Миша, все хуйна, давай по новой');
+        }).catch(() => {
+            alert('Миша, все хуйна, давай по-новой');
         })
   
 };
@@ -74,6 +71,8 @@ function onLoadMoreEvent(event) {
             }
 
             renderImage(r, refs.gallery);
+
+            gallery.refresh();
         });
 } 
 
@@ -83,18 +82,10 @@ function onImageClick(event) {
         return;
     };
 
-    showSimpleLightBox();
+    gallery.on('show.simplelightbox');
 };
 
-function createSimpleLightBox() {
-    gallery = new SimpleLightbox('.image-gallery a');
-    console.log('created SimpleLB')
-}
 
-function showSimpleLightBox() {
-    gallery.on('show.simplelightbox');
-    console.log('SimpleLB show')
-}
 
   
 
