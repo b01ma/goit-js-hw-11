@@ -11,28 +11,39 @@ export default function renderImage(response, ref) {
                 const largeImageUrl = data.largeImageURL;
             
               ref.insertAdjacentHTML('beforeend',
-                  `<a href="${largeImageUrl}" class="photo-card">
-                    
-                    <img src="${url}" />
-                        <div class="info">
-                            <p class="info-item">
+                  `<a class="photo-card" href="${largeImageUrl}">
+
+                        <div class="photo-card-wrapper" >
+
+                        <div class="photo-card__thumb-image">
+                            <img class="photo-card__image"
+                            src="${url}"
+                            alt="Фото Николая Тарасова" width="250">
+                        </div>
+                        
+                        <div class="photo-card__info">
+                            <p class="photo-card__info-item">
                             <b>Likes</b>${likes}
                             </p>
-                            <p class="info-item">
+                            <p class="photo-card__info-item">
                             <b>Views</b> ${views}
                             </p>
-                            <p class="info-item">
+                            <p class="photo-card__info-item">
                             <b>Comments</b>${comments}
                             </p>
-                            <p class="info-item">
+                            <p class="photo-card__info-item">
                             <b>Downloads</b>${downloads}
                             </p>
                         </div>
-                        
-                        </a>`);
+
+                        </div>
+                    
+                    </a>`);
             });
     
 };
+
+
 
 
 

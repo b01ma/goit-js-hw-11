@@ -12,8 +12,7 @@
     />
   </head>
   <body>
-    <div class="container">
-
+    
       <header class="header">
         <form class="search-form" id="search-form">
           <input type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
@@ -21,20 +20,18 @@
         </form>
       </header>
       
-      <section class="section">
+      <main class="section">
 
-      <div class="image-gallery"></div> 
+      <div class="image-gallery container"></div> 
 
       <footer class="footer is-hidden">
         <button type="button" class="load-more">Load more</button>
       </footer>
      
   
-      </section>
+      </main>
       
       <!-- Скрипт идёт последним в разметке. В нём уже подключен главный SASS-файл. -->
-
-    </div>
     
     <script src="./index.js"></script>
   </body>
