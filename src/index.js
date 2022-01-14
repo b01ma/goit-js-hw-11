@@ -3,6 +3,7 @@ import { options, fetchImage } from './js/fetchImage';
 import renderImage from './js/renderImage';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import Notiflix from 'notiflix';
 
 const refs = {
     button: document.querySelector('button'),
@@ -10,7 +11,7 @@ const refs = {
     input: document.querySelector('input'),
     loadMoreButton: document.querySelector('.load-more'),
     photoCard: document.querySelector('.phto-card'),
-    // galleryA: document.querySelector('.image-gallery a'),
+    footer: document.querySelector('.footer'),
 }
 
 // console.log(galleryA);
@@ -32,6 +33,10 @@ function onSearchEvent(event) {
     event.preventDefault();
 
     clearGallery();
+    
+    if (!refs.footer.classList.contains('is-hidden')) {
+        refs.footer.classList.add('is-hidden');
+    }
 
     if (!searchQueryText) {
         return;
@@ -43,15 +48,20 @@ function onSearchEvent(event) {
         .then(r => {
 
             if (!r.data.totalHits) {
-                alert('no resutls');
+                Notiflix.Notify.warning('no resutls');
+                return;
             }
 
+            Notiflix.Notify.success(`Hooray! We found ${r.data.totalHits} images.`);
+
             renderImage(r, refs.gallery);
-            
+
             gallery.refresh();
+            
+            showLoadMoreButton();
         
         }).catch(() => {
-            alert('Миша, все хуйна, давай по-новой');
+            Notiflix.Notify.failure('Миша, все хуйна, давай по-новой');
         })
   
 };
@@ -85,7 +95,8 @@ function onImageClick(event) {
     gallery.on('show.simplelightbox');
 };
 
-
-
+function showLoadMoreButton() {
+    refs.footer.classList.remove('is-hidden');
+}
   
 
