@@ -24,20 +24,30 @@ const refs = {
     loadMoreButton: document.querySelector('.load-more'),
     photoCard: document.querySelector('.phto-card'),
     footer: document.querySelector('.footer'),
-    querySerch: window.location.search, // это поле в адресной строке, что отвечает за параметр запроса
+    querySearch: window.location.search, // это поле в адресной строке, что отвечает за параметр запроса
     url: window.location.origin, // это базовый доменный адрес в адресной строке 
-}
-
-// console.log(galleryA);
+};
 
 let searchQueryText = ''.trim(); 
 let gallery = new SimpleLightbox('.image-gallery .photo-card');
+let urlParam = qs.parse(refs.querySearch).searchQuery;
+console.log('urlParam:', urlParam)
 
-firstStartPage(getUrlParams(), options);
-
-console.log(refs.form.elements.searchQuery.value);
-console.log(refs.input.value);
-
+if (!urlParam) {
+    console.log('поле в адресной строке с параметрами пустое:', urlParam);
+    return;
+} else {
+    console.log('поле в адресной строке с параметрами:', urlParam);
+    getUrlParams(urlParam);
+    getImage(urlParam, options);
+    
+    // window.onload = function () {
+    //     if (!window.location.hash) {
+    //         window.location = window.location + '#loaded';
+    //         window.location.reload();
+    //     };
+    // };
+}
 
 
 refs.input.addEventListener('input', onInputEvent);
@@ -46,8 +56,11 @@ refs.loadMoreButton.addEventListener('click', onLoadMoreEvent);
 refs.gallery.addEventListener('click', onImageClick);
 
 
+console.log('значение строки ввода: ',refs.input.value);
+
 function onInputEvent(event) {
     searchQueryText = event.currentTarget.value;
+    console.log('текст в поле input:',searchQueryText);
 
 }
 
@@ -61,15 +74,39 @@ function onSearchEvent(event) {
     }
 
     if (!searchQueryText) {
+        console.log('пустое поле ввода поиска:', !searchQueryText);
         return;
     };
 
     options.page = 1;
 
-    setUrlParams(refs.url ,searchQueryText);
+    setUrlParams(searchQueryText);
 
     getImage(searchQueryText, options);
   
+};
+
+function getImage(query, options) {
+
+    fetchImage(query, options)
+        .then(r => {
+
+            if (!r.data.totalHits) {
+                Notiflix.Notify.warning('no resutls');
+                return;
+            }
+
+            Notiflix.Notify.success(`Hooray! We found ${r.data.totalHits} images.`);
+
+            renderImage(r, refs.gallery);
+
+            gallery.refresh();
+            
+            showLoadMoreButton();
+        
+        }).catch(() => {
+            Notiflix.Notify.failure('Миша, все хуйна, давай по-новой');
+        });
 };
 
 function clearGallery() {
@@ -95,49 +132,28 @@ function showLoadMoreButton() {
     refs.footer.classList.remove('is-hidden');
 };
 
-function getUrlParams() { 
-    let params = qs.parse(refs.querySerch);
-    refs.input.value = params.query;
+function getUrlParams(queryText) { 
+;
+    refs.input.value = queryText;
+    searchQueryText = queryText;
+
+    console.log('значение searchQueryText:', queryText )
 
     return refs.input.value;
 };
 
-function setUrlParams(url, query) {
-    window.history.pushState('', '', `${url}/?query=${query}`);
-}
+function setUrlParams(params) {
+    const url = new URL(window.location);
+    console.log(url);
 
-function firstStartPage(query, options) {
+        console.log(url.searchParams)
+    url.searchParams.set('searchQuery',params);
+    
 
-    if (!query) {
-        return;
-    }
-
-    getImage(query, options);
-
+    window.history.pushState({}, '', url);
 };
 
-function getImage(query, options) {
 
-    fetchImage(query, options)
-        .then(r => {
-
-            if (!r.data.totalHits) {
-                Notiflix.Notify.warning('no resutls');
-                return;
-            }
-
-            Notiflix.Notify.success(`Hooray! We found ${r.data.totalHits} images.`);
-
-            renderImage(r, refs.gallery);
-
-            gallery.refresh();
-            
-            showLoadMoreButton();
-        
-        }).catch(() => {
-            Notiflix.Notify.failure('Миша, все хуйна, давай по-новой');
-        });
-}
 
 
 
