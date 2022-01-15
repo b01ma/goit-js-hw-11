@@ -40,13 +40,6 @@ if (!urlParam) {
     console.log('поле в адресной строке с параметрами:', urlParam);
     getUrlParams(urlParam);
     getImage(urlParam, options);
-    
-    // window.onload = function () {
-    //     if (!window.location.hash) {
-    //         window.location = window.location + '#loaded';
-    //         window.location.reload();
-    //     };
-    // };
 }
 
 
