@@ -31,13 +31,13 @@ const refs = {
 let searchQueryText = ''.trim(); 
 let gallery = new SimpleLightbox('.image-gallery .photo-card');
 let urlParam = qs.parse(refs.querySearch).searchQuery;
-console.log('urlParam:', urlParam)
+// console.log('urlParam:', urlParam)
 
 if (!urlParam) {
-    console.log('поле в адресной строке с параметрами пустое:', urlParam);
-    return;
+    
+    // console.log('поле в адресной строке с параметрами пустое:', urlParam);
 } else {
-    console.log('поле в адресной строке с параметрами:', urlParam);
+    // console.log('поле в адресной строке с параметрами:', urlParam);
     getUrlParams(urlParam);
     getImage(urlParam, options);
 }
@@ -49,7 +49,7 @@ refs.loadMoreButton.addEventListener('click', onLoadMoreEvent);
 refs.gallery.addEventListener('click', onImageClick);
 
 
-console.log('значение строки ввода: ',refs.input.value);
+// console.log('значение строки ввода: ',refs.input.value);
 
 function onInputEvent(event) {
     searchQueryText = event.currentTarget.value;
@@ -131,8 +131,6 @@ function getUrlParams(queryText) {
     searchQueryText = queryText;
 
     console.log('значение searchQueryText:', queryText )
-
-    return refs.input.value;
 };
 
 function setUrlParams(params) {

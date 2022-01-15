@@ -1,0 +1,138 @@
+body {
+  background-color: #ececee;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.71;
+  letter-spacing: 0.03em;
+  display: block;
+}
+
+img {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.header {
+  width: 100%;
+  background-color: #2196f3;
+  position: fixed;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.search-form {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-form input {
+  margin-right: 10px;
+  height: 40px;
+  padding-left: 42px;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  box-sizing: border-box;
+  border-radius: 4px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-form input:focus, .search-form input:active {
+  border-color: #2196f3;
+}
+
+.search-form input:focus + .form__icon,
+.search-form input:active + .form__icon {
+  fill: #2196f3;
+}
+
+.search-form button,
+.load-more {
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.65;
+  text-align: center;
+  letter-spacing: 0.05em;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  border: none;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+}
+
+.section {
+  padding-top: 50px;
+}
+
+.image-gallery {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 15px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: #2196f3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+}
+
+.is-hidden {
+  visibility: hidden;
+}
+
+.photo-card-wrapper {
+  margin: 10px;
+  background-color: #b5dcf7;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 0px 0px 4px 4px;
+}
+
+.photo-card__thumb-image {
+  width: 250px;
+  height: 150px;
+}
+
+.photo-card__image {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.photo-card__info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  font-size: 10px;
+  padding: 10px;
+}
+
+.photo-card__info-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  margin: 5px;
+}
+/*# sourceMappingURL=main.css.map */
