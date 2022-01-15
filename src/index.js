@@ -25,6 +25,7 @@ const refs = {
     photoCard: document.querySelector('.phto-card'),
     footer: document.querySelector('.footer'),
     querySerch: window.location.search, // это поле в адресной строке, что отвечает за параметр запроса
+    url: window.location.origin, // это базовый доменный адрес в адресной строке 
 }
 
 // console.log(galleryA);
@@ -65,6 +66,8 @@ function onSearchEvent(event) {
 
     options.page = 1;
 
+    setUrlParams(refs.url ,searchQueryText);
+
     getImage(searchQueryText, options);
   
 };
@@ -97,6 +100,10 @@ function getUrlParams() {
     refs.input.value = params.query;
 
     return refs.input.value;
+};
+
+function setUrlParams(url, query) {
+    window.history.pushState('', '', `${url}/?query=${query}`);
 }
 
 function firstStartPage(query, options) {
