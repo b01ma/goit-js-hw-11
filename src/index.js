@@ -31,10 +31,12 @@ const refs = {
 let searchQueryText = ''.trim(); 
 let gallery = new SimpleLightbox('.image-gallery .photo-card');
 let urlParam = qs.parse(refs.querySearch).searchQuery;
-// console.log('urlParam:', urlParam)
+let maxPage = 0;
+
+
 
 if (!urlParam) {
-    
+    return;
     // console.log('поле в адресной строке с параметрами пустое:', urlParam);
 } else {
     // console.log('поле в адресной строке с параметрами:', urlParam);
@@ -84,18 +86,32 @@ function getImage(query, options) {
     fetchImage(query, options)
         .then(r => {
 
-            if (!r.data.totalHits) {
+            const totalHits = r.data.totalHits;
+
+            if (!totalHits) {
                 Notiflix.Notify.warning('no resutls');
                 return;
             }
 
-            Notiflix.Notify.success(`Hooray! We found ${r.data.totalHits} images.`);
-
+            if (options.page === 1) {
+                Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+            }
+            console.log('loading')
             renderImage(r, refs.gallery);
-
+            console.log('yes, it is loaded')
+            refs.loadMoreButton.disabled = false;
             gallery.refresh();
-            
-            showLoadMoreButton();
+
+            maxPage = Math.round(totalHits / options.perPage);
+            // console.log('maxPage:', maxPage);
+            // console.log('currentPage:',currentPage);
+
+            if (options.page >= maxPage) {
+                console.log('last page')
+                hideLoadMoreButton();
+            } else {
+                showLoadMoreButton();
+            };
         
         }).catch(() => {
             Notiflix.Notify.failure('Миша, все хуйна, давай по-новой');
@@ -109,6 +125,7 @@ function clearGallery() {
 function onLoadMoreEvent(event) {
     options.page += 1;
 
+    refs.loadMoreButton.disabled = true;
     getImage(searchQueryText, options);
 } 
 
@@ -123,6 +140,10 @@ function onImageClick(event) {
 
 function showLoadMoreButton() {
     refs.footer.classList.remove('is-hidden');
+};
+
+function hideLoadMoreButton() {
+    refs.footer.classList.add('is-hidden');
 };
 
 function getUrlParams(queryText) { 

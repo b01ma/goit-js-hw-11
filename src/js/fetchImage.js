@@ -6,7 +6,7 @@ const KEY = '14665608-5c267132ac5256a05f9292b82';
 export let options = {
         imageType: "photo",
         page: 1,
-        perPage: 40,
+        perPage: 10,
         orientation: "horizontal",
         safeSearch: "false",
 }
