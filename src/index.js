@@ -36,7 +36,7 @@ let maxPage = 0;
 
 
 if (!urlParam) {
-    return;
+    
     // console.log('поле в адресной строке с параметрами пустое:', urlParam);
 } else {
     // console.log('поле в адресной строке с параметрами:', urlParam);
