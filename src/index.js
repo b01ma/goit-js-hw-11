@@ -12,8 +12,8 @@ import qs from 'query-string';
 // in the window, Axios - for fetch
 // 4. Load more button - pagination 
 // Optional: 
-// 5. Infinite scroll
-// 6. Smooth scroll
+// 5. Infinite scroll - not done
+// 6. Smooth scroll - not done
 // 7. Library Query-string to go back on the same page
 
 const refs = {
@@ -33,10 +33,8 @@ let gallery = new SimpleLightbox('.image-gallery .photo-card');
 let urlParam = qs.parse(refs.querySearch).searchQuery;
 let maxPage = 0;
 
-
-
 if (!urlParam) {
-    
+    // return
     // console.log('поле в адресной строке с параметрами пустое:', urlParam);
 } else {
     // console.log('поле в адресной строке с параметрами:', urlParam);
@@ -55,8 +53,7 @@ refs.gallery.addEventListener('click', onImageClick);
 
 function onInputEvent(event) {
     searchQueryText = event.currentTarget.value;
-    console.log('текст в поле input:',searchQueryText);
-
+    // console.log('текст в поле input:',searchQueryText);
 }
 
 function onSearchEvent(event) {
@@ -69,7 +66,7 @@ function onSearchEvent(event) {
     }
 
     if (!searchQueryText) {
-        console.log('пустое поле ввода поиска:', !searchQueryText);
+        // console.log('пустое поле ввода поиска:', !searchQueryText);
         return;
     };
 
@@ -81,41 +78,39 @@ function onSearchEvent(event) {
   
 };
 
-function getImage(query, options) {
+async function getImage(query, options) {
 
-    fetchImage(query, options)
-        .then(r => {
+    try {
 
-            const totalHits = r.data.totalHits;
+        const r = await fetchImage(query, options)
+        const totalHits = r.data.totalHits;
 
-            if (!totalHits) {
-                Notiflix.Notify.warning('no resutls');
-                return;
-            }
+        if (!totalHits) {
+            Notiflix.Notify.warning('no resutls');
+            return;
+        }
 
-            if (options.page === 1) {
-                Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-            }
-            console.log('loading')
-            renderImage(r, refs.gallery);
-            console.log('yes, it is loaded')
-            refs.loadMoreButton.disabled = false;
-            gallery.refresh();
+        if (options.page === 1) {
+            Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+        }
+           
+        renderImage(r, refs.gallery);
+            
+        refs.loadMoreButton.disabled = false;
+        gallery.refresh();
 
-            maxPage = Math.round(totalHits / options.perPage);
-            // console.log('maxPage:', maxPage);
-            // console.log('currentPage:',currentPage);
+        maxPage = Math.round(totalHits / options.perPage);
 
-            if (options.page >= maxPage) {
-                console.log('last page')
-                hideLoadMoreButton();
-            } else {
-                showLoadMoreButton();
-            };
-        
-        }).catch(() => {
+        if (options.page >= maxPage) {
+            hideLoadMoreButton();
+        } else {
+            showLoadMoreButton();
+        };
+    } catch (error)
+        {
             Notiflix.Notify.failure('Миша, все хуйна, давай по-новой');
-        });
+        };
+
 };
 
 function clearGallery() {
@@ -147,28 +142,13 @@ function hideLoadMoreButton() {
 };
 
 function getUrlParams(queryText) { 
-;
     refs.input.value = queryText;
     searchQueryText = queryText;
-
-    console.log('значение searchQueryText:', queryText )
 };
 
 function setUrlParams(params) {
     const url = new URL(window.location);
-    console.log(url);
 
-        console.log(url.searchParams)
     url.searchParams.set('searchQuery',params);
-    
-
     window.history.pushState({}, '', url);
 };
-
-
-
-
-
-    
-  
-
